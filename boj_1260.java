@@ -9,7 +9,7 @@ public class boj_1260 {
         int M = sc.nextInt();
         int Start = sc.nextInt();
         A = new ArrayList[N + 1];
-        visited = new boolean[N + 1];
+        
         for (int i = 1; i < N+1; i++) {
             A[i] = new ArrayList<Integer>();
         }
@@ -22,10 +22,12 @@ public class boj_1260 {
         for (int i = 1; i <= N; i++) {
             Collections.sort(A[i]); // List<T>타입의 정렬 방법
         }
+        visited = new boolean[N + 1];
         DFS(Start);
         System.out.println();
         visited = new boolean[N + 1];
         BFS(Start);
+        System.out.println();
     }
 
     public static void BFS(int start) {
@@ -36,7 +38,7 @@ public class boj_1260 {
         while (!queue.isEmpty()) {
             int now_Node = queue.poll();
             // front 빼내기
-            System.out.println(now_Node + " ");
+            System.out.print(now_Node + " ");
             for (int i : A[now_Node]) {
                 if (!visited[i]) {
                     visited[i] = true;
@@ -47,7 +49,7 @@ public class boj_1260 {
     }
 
     public static void DFS(int start) {
-        System.out.println(start + " ");
+        System.out.print(start + " ");
         visited[start] = true;
         for (int i : A[start]) {
             if (!visited[i]) {
