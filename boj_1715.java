@@ -20,5 +20,6 @@ public class boj_1715 {
             pq.add(data1 + data2);
         }
         System.out.println(sum);
+
     }
 }
