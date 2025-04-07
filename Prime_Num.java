@@ -11,7 +11,7 @@ public class Prime_Num {
         for (int i = 0; i < isPrime.length; i++) isPrime[i] = true; // 일단 true로 초기화
         isPrime[0] = isPrime[1] = false;// 1과 0은 소수가 아님
 
-        for (int i = 2; i < Math.sqrt(n); i++) { // 2부터 n의 제곱근까지의 모든 수를 확인
+        for (int i = 2; i <= Math.sqrt(n); i++) { // 2부터 n의 제곱근까지의 모든 수를 확인
             if (isPrime[i]) {//i 가 소수라면
                 for (int j = i*i; j <= n; j+=i) {
                     isPrime[j] = false; // i의 배수는 모두 소수가 아님
