@@ -25,13 +25,17 @@ public class leet_two_sum {
         int[][] arr = new int[nums.length][2];
         for (int i = 0; i < nums.length; i++) {
             arr[i][0] = nums[i]; // 실제 값
-            arr[i][1] = i; // 배열의 인덱스
+            arr[i][1] = i; // 배열의 원래 인덱스
         }
-        Arrays.sort(nums);
+
+        Arrays.sort(arr, (o1, o2) -> {
+            return o1[0] - o2[0];
+        }); // 실제 값을 기반으로 정렬
+
         int l = 0, r = nums.length - 1;
         while (l < r) {
-            if (nums[l] + nums[r] == target) return new int[]{arr[l][1],arr[r][1]};
-            else if (nums[l] + nums[r] > target) r -= 1;
+            if (arr[l][0] + arr[r][0] == target) return new int[]{arr[l][1],arr[r][1]};
+            else if (arr[l][0] + arr[r][0] > target) r -= 1;
             else l += 1;
         }
         return null;
