@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class boj_12023 {
+public class boj_13023 {
     static ArrayList<Integer>[] A;
     static boolean[] visited;
     static boolean arrive;
