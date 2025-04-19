@@ -6,15 +6,18 @@ public class pro_prime_num {
 
     public int solution(int[] nums) {
         int result = 0;
-        int[] tmp = Arrays.copyOf(nums, nums.length);
-        Arrays.sort(tmp); // max값이 정해져 있음 => 문제에 나와있는 숫자를 보고 이걸로 new int [3001]
-        int max = tmp[tmp.length - 1] + tmp[tmp.length - 2] + tmp[tmp.length - 3];
-        boolean[] isPrime = new boolean[max + 1];
+
+//        int[] tmp = Arrays.copyOf(nums, nums.length);
+//        Arrays.sort(tmp);
+        // max값이 정해져 있음 => 문제에 나와있는 숫자를 보고 이걸로 new int [3001]
+//        int max = tmp[tmp.length - 1] + tmp[tmp.length - 2] + tmp[tmp.length - 3];
+        int max = 3000; // 리팩토링 예시
+        boolean[] isPrime = new boolean[max + 1]; // 에라토스테네스의 체
 
 
         Arrays.fill(isPrime, true);
         isPrime[0] = false;
-        isPrime[1] = false;
+        isPrime[1] = false; // 소수 세팅
 
         for (int i = 2; i <= Math.sqrt(max); i++) {
             if (isPrime[i]) {
