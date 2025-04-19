@@ -1,3 +1,5 @@
+package java_algorithm.chapter03;
+
 import java.util.Scanner;
 import java.util.Stack;
 

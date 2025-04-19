@@ -1,3 +1,5 @@
+package java_algorithm.chapter03;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
