@@ -1,3 +1,5 @@
+package java_algorithm.chapter01;
+
 import java.util.Scanner;
 
 public class boj_2750 {
