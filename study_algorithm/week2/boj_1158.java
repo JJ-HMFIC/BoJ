@@ -1,3 +1,6 @@
+package study_algorithm.week2;
+
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -7,7 +10,8 @@ public class boj_1158 {
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
         int K = sc.nextInt();
-        Queue<Integer> queue = new LinkedList<>();
+
+        Queue<Integer> queue = new ArrayDeque<>();
 
         for (int i = 1; i <= N; i++) queue.offer(i); // 큐에 일단 담기
         System.out.print('<'); // 입출력 요구 조건 맞추기 1
