@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Scanner;
 
-public class boj_2163_2 {
+public class boj_2164_2 {
     public static void main(String[] args) {
         Deque<Integer> queue = new ArrayDeque<>();
 
