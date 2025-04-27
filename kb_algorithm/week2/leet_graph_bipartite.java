@@ -22,8 +22,8 @@ public class leet_graph_bipartite {
 //            } // 인접 리스트 초기화
 //        }
         for (int i = 0; i < graph.length; i++) {
-            if(color[i] == -1)
-                if(!BFS(i, graph)) return false;
+            if (color[i] == -1)
+                if (!BFS(i, graph)) return false;
         }
 
         return true;
