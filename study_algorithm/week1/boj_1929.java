@@ -1,3 +1,5 @@
+package study_algorithm.week1;
+
 import java.util.Scanner;
 
 public class boj_1929 {
