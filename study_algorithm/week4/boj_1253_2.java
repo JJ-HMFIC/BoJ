@@ -12,24 +12,35 @@ public class boj_1253_2 {
 
         int N = Integer.parseInt(br.readLine());
         int[] arr = new int[N];
+        int result = 0;
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) arr[i] = Integer.parseInt(st.nextToken());
         Arrays.sort(arr);
 
-        int start = 0;
-        int end = arr.length - 1;
-        int count = 1; // 자기 자신을 포함
+        //---- 수정해야 함
 
-        while (start < end) {
-            if (arr[start] + arr[end] == N) {
-                if(start == end) count++;
-                else count += 2;
-                end--;
-            } else if (arr[start] + arr[end] < N) {
-                start++;
-            } else end--;
+        for (int i = 0; i < N; i++) {
+            int j = 0;
+            int k = N - 1;
+            int good = arr[i];
+            while (j < k) {
+                if (j == i) {
+                    j++;
+                    continue;
+                }
+                if (k == i) {
+                    k--;
+                    continue;
+                }
+                if (arr[j] + arr[k] == good) {
+                    result++;
+                    break;
+                }
+                else if (arr[j]+arr[k]>good) k--;
+                else j++;
+            }
         }
-        System.out.println(count);
+        System.out.println(result);
     }
 }
