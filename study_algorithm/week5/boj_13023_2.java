@@ -25,7 +25,7 @@ public class boj_13023_2 {
         }
         for (int i = 0; i < N; i++) {
             DFS(i, 1);
-            if(result) break;
+            if(result) break; // 얼리리턴 좌표 -> 이미 깊이가 5면 멈추기
         }
         if(result) System.out.println(1);
         else System.out.println(0);
@@ -34,14 +34,15 @@ public class boj_13023_2 {
     private static void DFS(int start, int depth) {
         if(depth==5) {
             result = true;
-            return;
+            return; // 깊이가 5면 리턴
         }
 
-        visited[start] = true;
+        visited[start] = true; // 방문처리
 
         for (int tmp : graph[start]) {
             if (!visited[tmp]) {
                 DFS(tmp, depth + 1);
+                // 인접노드 재귀로 방문하기
             }
         }
         visited[start] = false;

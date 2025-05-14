@@ -23,7 +23,7 @@ public class boj_1707 {
                 graph[j] = new ArrayList<>();
             }
 
-            int[] color = new int[V + 1];
+            int[] color = new int[V + 1]; // 방문처리를 색깔로 칠함
 
 
             for (int j = 0; j < E; j++) {
@@ -34,15 +34,19 @@ public class boj_1707 {
 
                 graph[a].add(b);
                 graph[b].add(a);
-            }
+            } // 인접리스트 입력 처리
 
-            boolean result = true;
+            boolean result = true; // 일단 기본은 이분그래프다 라고 정의
 
             for (int j = 1; j <= V; j++) {
+                // for 문을 돌리는 이유, 모든 노드가 연결되어 있지 않기 때문에
                 if (color[j] == 0) {
+                    //해당 노드를 방문 안했다면
                     if (!DFS(graph, color, j, 1)) {
+                        // 1로 처음 칠해서 DFS 실행하는데
+                        // 이분그래프가 안되면
                         result = false;
-                        break;
+                        break; // 더이상 찾을 필요없이 이분그래프가 아니다
                     }
                 }
             }
