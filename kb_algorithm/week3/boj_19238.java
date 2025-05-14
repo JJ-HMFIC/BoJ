@@ -122,12 +122,9 @@ public class boj_19238 {
             // x 좌표가 작은 것 먼저
             return Integer.compare(a.position.getY(), b.position.getY());
             // x 좌표가 작으면 y좌표가 작은 것 먼저
-
-            //BFS 중에 distance == minDist인 손님들만 후보 리스트에 담았기 때문에
-            //리스트에 들어오는 좌표들의 거리는 모두 같다
         });
 
-        return clients.get(0);
+        return clients.get(0); //가장 가까운 손님의 인덱스 + 좌표 + 도착지 리턴
     }
 
     private static int runSimulation(Entry taxi, int[][] map, List<Passenger> passengers, int N, int fuel) {
