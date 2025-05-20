@@ -136,7 +136,7 @@ public class boj_19238 {
             int dist = target.distance; // 가장 가까운 손님의 거리
             if (fuel < dist) return -1; // 현재 연료로 거기까지 못가면 gg
             fuel -= dist;
-            taxi = target.position; // 택시 위치 업데이트
+//            taxi = target.position; // 택시 위치 업데이트
 
             Passenger p = passengers.get(target.index);
             // 입력 받았을 때 리스트에서 몇 번째 인덱스의 손님이
