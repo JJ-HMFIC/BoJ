@@ -21,6 +21,10 @@ public class boj_1389 {
                 friend[i][j] = (i == j) ? 0 : 1000001;
             }
         }
+        // 전부 0으로 초기화 할 시
+        // 플로이드-워셜 공식을 쓸 때 최단 거리가 0+0= 0 으로 망가지게 된다
+        // 대각선 i=i 일때만 0으로 초기화
+
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
 
@@ -29,8 +33,9 @@ public class boj_1389 {
 
             friend[a][b] = 1;
             friend[b][a] = 1;
-        }
+        }// 인접 행렬 만들기
 
+        //플로이드- 워셜 사용
         for (int K = 1; K <= N; K++) {
             for (int S = 1; S <= N; S++) {
                 for (int E = 1; E <= N; E++) {
@@ -45,10 +50,10 @@ public class boj_1389 {
             int sum = 0;
             for (int j = 1; j <= N; j++) {
                 sum += friend[i][j];
-            }
+            } // i에서 각각 정점까지의 거리의 합
             if (sum < answer) {
                 answer = sum;
-                idx = i;
+                idx = i; // 가장 합이 작은 정점의 인데스를 반환해야 함
             }
         }
         System.out.println(idx);
