@@ -9,7 +9,7 @@ public class nossi_folder {
     public String solution(String[][] folders, String p, String q) {
         Map<String, String> map = new HashMap<>();
         for (String[] folder : folders) {
-            map.put(folder[1], folder[0]); //자식, 부모 한 쌍
+            map.put(folder[1], folder[0]); //[자식, 부모] 한 쌍으로 저장
         }
 
        ;
@@ -20,14 +20,15 @@ public class nossi_folder {
         Set<String> visited = new HashSet<>();
 
         while (p != null) {
-            visited.add(p);
+            visited.add(p); // 경로를 set에 저장함
             p = map.get(p); // 부모로 올라가기
         }
         while (q != null) {
-            if (visited.contains(q)) return q; // 중간에 부무였다면 q를 리턴
-            q = map.get(q);
+            if (visited.contains(q)) return q;
+            // 타고 올라가는데 경로에 있으면 LCA
+            q = map.get(q); // 부모로 올라가기
         }
 
-        return "root";
+        return "root"; // 안만났으면 루트
     }
 }
