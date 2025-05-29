@@ -66,7 +66,7 @@ public class boj_2206 {
         Deque<Pos> queue = new ArrayDeque<>();
         boolean[][][] visited = new boolean[N + 1][M + 1][2];
         visited[x][y][0] = true;
-        queue.offer(new Pos(x, y, 1, false));
+        queue.offer(new Pos(x, y, 1, false)); // 방문 처리
 
         while (!queue.isEmpty()) {
             Pos top = queue.poll();
@@ -75,23 +75,29 @@ public class boj_2206 {
             int dist = top.getDist();
             boolean broken = top.isBroken();
 
-            if (topX == N && topY == M) return dist;
+            if (topX == N && topY == M) return dist; // 도착하면 거리 반환
 
             for (int i = 0; i < 4; i++) {
                 int nx = topX + dx[i];
                 int ny = topY + dy[i];
 
                 if (nx <= 0 || ny <= 0 || nx > N || ny > M) continue;
+                //예외처리
                 if (visited[nx][ny][(broken) ? 1 : 0]) continue;
+                //방문처리
 //                if (map[nx][ny] == 1) continue;
 
                 if (map[nx][ny] == 0 && !visited[nx][ny][broken ? 1 : 0]) {
+                    // 벽 아니고 방문안했으면
                     visited[nx][ny][broken ? 1 : 0] = true;
                     queue.offer(new Pos(nx, ny, dist + 1, broken));
+                    // 방문처리 + 큐에 넣기
                 }
                 if (map[nx][ny] == 1 && !broken && !visited[nx][ny][1]) {
+                    // 만약 벽인데? 기회를 안썼고 방문안했다면
                     visited[nx][ny][1] = true;
                     queue.offer(new Pos(nx, ny, dist + 1, true));
+                    //기회 사용하여 방문처리
                 }
             }
 

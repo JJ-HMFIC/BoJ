@@ -9,7 +9,7 @@ class pro_queue {
             sum += arr[i];
         }
         return sum;
-    }
+    } // 배열의 합 메소드
 
     public int solution(int[] queue1, int[] queue2) {
         Deque<Integer> queueA = new ArrayDeque<>();
@@ -24,25 +24,25 @@ class pro_queue {
             queueB.add(queue2[i]);
             sum += queue2[i];
         } // 초기화
-        if (sum % 2 == 1) return -1; // 얼리 리턴 조건
-
+        if (sum % 2 == 1) return -1;
+        // 얼리 리턴 조건, 전체 합이 홀수면 불가능함
         long sum1 = getSum(queue1);
-        long sum2 = getSum(queue2); // 두 큐의 합
+        long sum2 = getSum(queue2); // 각 큐의 합
         int count = 0;
 
         while (sum1 != sum2) {
-            if (count > 2000000) return -1;
-            if (sum1 > sum2) {
+            if (count > 2000000) return -1; // 3n 을 넘어가면 절대 못맞추는 경우의 수
+            if (sum1 > sum2) { // A가 크면 B에게 원소 하나를 준다
                 int tmp = queueA.poll();
                 sum1 -= tmp;
                 sum2 += tmp;
                 queueB.add(tmp);
-            } else if (sum1 < sum2) {
+            } else if (sum1 < sum2) { // 반대의 경우
                 int tmp = queueB.poll();
                 sum2 -= tmp;
                 sum1 += tmp;
                 queueA.add(tmp);
-            } else return count;
+            } else return count; // 같아지면 횟수를 리턴
             count++;
         }
         return count;

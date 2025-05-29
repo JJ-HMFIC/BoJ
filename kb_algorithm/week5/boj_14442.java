@@ -86,12 +86,16 @@ public class boj_14442 {
 //                if (visited[nx][ny][broken]) continue;
 
                 if (map[nx][ny] == 0 && !visited[nx][ny][broken]) {
+                    // 벽이 아니고 방문안했다면 방문처리+큐에 넣기
                     visited[nx][ny][broken] = true;
                     queue.offer(new Pos(nx, ny, dist + 1, broken));
                 }// broken = k면 여기 분기에서 걸림 => 차원을 안바꾸니깐
+
                 if (map[nx][ny] == 1 &&broken<K &&!visited[nx][ny][broken + 1]) {
+                    //만약 벽인데 기회를 사용할 수 있고(K미만) 다음 세계관에서 방문안했다면
                     visited[nx][ny][broken + 1] = true;
                     queue.offer(new Pos(nx, ny, dist + 1, broken + 1));
+                    //방문처리 및 큐에 넣기
                 }
             }
 
