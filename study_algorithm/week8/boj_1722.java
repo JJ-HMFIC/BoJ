@@ -6,8 +6,9 @@ public class boj_1722 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         long[] fact = new long[21]; // N이 20까지니까
+        StringBuilder sb = new StringBuilder();
         fact[0] = 1;
-        for (int i = 1; i < 21; i++) fact[i] *= fact[i - 1]; // 팩토리얼 계산
+        for (int i = 1; i < 21; i++) fact[i] = fact[i - 1] * i; // 팩토리얼 계산
 
         int N = sc.nextInt();
         int menu = sc.nextInt(); // 1번? 2번?
@@ -32,7 +33,7 @@ public class boj_1722 {
                     }
                 }
             }
-            for (int num : result) System.out.println(num + " ");
+            for (int num : result) sb.append(num).append(" ");
         } else { //2번 : 현재 순열이 몇 번째인지
             int[] arr = new int[N];
             boolean[] used = new boolean[N + 1];
@@ -50,7 +51,8 @@ public class boj_1722 {
                 result += able * fact[N - 1 - i];
                 used[cur] = true;
             }
-            System.out.println(result + 1);
+            sb.append(result + 1);
         }
+        System.out.println(sb.toString());
     }
 }
