@@ -16,11 +16,12 @@ class Solution {
 
     private void sub(int[] nums, ArrayList<Integer> path, int start) {
         answer.add(new ArrayList<>(path));
+        // path 리스트 복사해서 넣기
 
         for (int i = start; i < nums.length; i++) {
-            path.add(nums[i]);
-            sub(nums, path, i + 1);
-            path.remove(path.size() - 1);
+            path.add(nums[i]);//요소 넣고 
+            sub(nums, path, i + 1); // 큰 요소 넣기
+            path.remove(path.size() - 1); //백트래킹
         }
     }
 }

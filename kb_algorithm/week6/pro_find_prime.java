@@ -22,7 +22,7 @@ class Solution {
 
     private void permutation(String numbers, String word) {
         if (!word.isEmpty()) {
-            int num = Integer.parseInt(word);
+            int num = Integer.parseInt(word); // 숫자 처리
             if(isPrime(num)) answer.add(num);
         }
 
@@ -40,7 +40,7 @@ class Solution {
         if (num < 2) return false;
         for (int i = 2; i * i <= num; i++) {
             if (num % i == 0) return false;
-        }
+        } // num이 어떤 수의 배수라면 소수가 아님
         return true;
     }
 }
