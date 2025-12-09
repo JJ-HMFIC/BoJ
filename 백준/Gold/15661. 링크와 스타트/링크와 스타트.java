@@ -3,10 +3,10 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int N,min;
+    static int N, min;
     static int[][] arr;
-    static List<Integer> idxStart, idxLink;
-
+    //    static List<Integer> idxStart, idxLink;
+    static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,8 +14,9 @@ public class Main {
 
         arr = new int[N][N];
         min = Integer.MAX_VALUE;
-        idxStart = new ArrayList<>();
-        idxLink = new ArrayList<>();
+        visited = new boolean[N];
+//        idxStart = new ArrayList<>();
+//        idxLink = new ArrayList<>();
         StringTokenizer st;
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
@@ -30,19 +31,23 @@ public class Main {
 
     private static void subset(int idx) {
         if (idx == N) {
-            int sum1 = listSum(idxStart);
-            for (int i = 0; i < N; i++) {
-                if(!idxStart.contains(Integer.valueOf(i))) idxLink.add(i);
-            }
-            int sum2 = listSum(idxLink);
-            min = Math.min(min, Math.abs(sum1 - sum2));
-            idxLink.clear();
+            //int sum1 = listSum(idxStart);
+//            for (int i = 0; i < N; i++) {
+//                if(!idxStart.contains(Integer.valueOf(i))) idxLink.add(i);
+//            }
+//            int sum2 = listSum(idxLink);
+//            min = Math.min(min, Math.abs(sum1 - sum2));
+//            idxLink.clear();
+            int sum = result();
+            min = Math.min(min, sum);
             return;
         }
-        idxStart.add(idx);
+        //idxStart.add(idx);
+        visited[idx] = true;
         subset(idx + 1);
 
-        idxStart.remove(Integer.valueOf(idx));
+        //idxStart.remove(Integer.valueOf(idx));
+        visited[idx] = false;
         subset(idx + 1);
     }
 
@@ -54,5 +59,19 @@ public class Main {
             }
         }
         return sum;
+    }
+
+    private static int result() {
+        List<Integer> trueIdx = new ArrayList<>();
+        List<Integer> falseIdx = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            if (visited[i]) trueIdx.add(i);
+            else falseIdx.add(i);
+        }
+
+        int trueSum = listSum(trueIdx);
+        int falseSum = listSum(falseIdx);
+
+        return Math.abs(trueSum - falseSum);
     }
 }
