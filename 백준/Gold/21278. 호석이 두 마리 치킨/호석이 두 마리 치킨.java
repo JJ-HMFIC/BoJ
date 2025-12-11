@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -34,7 +33,7 @@ public class Main {
                 chicken(i, j);
             }
         }
-        System.out.println((k1 - 1) + " " + (k2 - 1) + " " + min * 2);
+        System.out.println((k1) + " " + (k2) + " " + min * 2);
     }
 
     private static void chicken(int one, int two) {
