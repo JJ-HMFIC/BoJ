@@ -4,7 +4,6 @@ import java.util.*;
 public class Main {
     static ArrayList<Integer>[] list;
     static int k1, k2, N, min;
-    //static int[] result;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -25,15 +24,14 @@ public class Main {
         }
 
         min = Integer.MAX_VALUE;
-        k1 = Integer.MAX_VALUE;
-        k2 = Integer.MAX_VALUE;
+
         for (int i = 1; i < N; i++) {
             for (int j = i + 1; j <= N; j++) {
 //                if (i == j) continue;
                 chicken(i, j);
             }
         }
-        System.out.println((k1) + " " + (k2) + " " + min * 2);
+        System.out.println(k1 + " " + k2 + " " + min * 2);
     }
 
     private static void chicken(int one, int two) {
@@ -51,6 +49,9 @@ public class Main {
             Info now = queue.poll();
             int num = now.num;
             int dist = now.dist;
+
+            if (dist > distance[num]) continue;
+            
             for (int neighbor : list[num]) {
                 if (dist + 1 < distance[neighbor]) {
                     distance[neighbor] = dist + 1;
@@ -63,16 +64,11 @@ public class Main {
             if (distance[i] == 100000) return;
             tmp += distance[i];
         }
-        if (tmp > min) return;
-
-        min = tmp;
-
-        if (k1 == Math.min(one, two)) {
-            k2 = Math.min(k2, Math.max(one, two));
-            return;
+        if (tmp < min) {
+            min = tmp;
+            k1 = one;
+            k2 = two;
         }
-        k1 = Math.min(one, two);
-        k2 = Math.max(one, two);
 
     }
 }
