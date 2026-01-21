@@ -8,13 +8,12 @@ public class Main {
 
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-        String[] names = new String[N];
         long answer = 0;
         Map<Integer, ArrayList<Integer>> goodFriends = new HashMap<>();
 
         for (int i = 0; i < N; i++) {
-            names[i] = br.readLine();
-            int len = names[i].length();
+            String name = br.readLine();
+            int len = name.length();
             if (!goodFriends.containsKey(len)) {
                 goodFriends.put(len, new ArrayList<>());
             }
