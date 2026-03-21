@@ -1,103 +1,82 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    static int V, E, K; // k는 출발노드
-    static int[] distance; //  최단 거리 저장 배열 , 시작점에서 각 인덱스까지 최단 거리
-    static boolean[] visited;
     static ArrayList<Node>[] list;
-    static PriorityQueue<Node> queue = new PriorityQueue<>();
+    static int[] distance;
+    static StringBuilder sb;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-
-        StringBuilder sb = new StringBuilder();
-
-        V = Integer.parseInt(st.nextToken());
-        E = Integer.parseInt(st.nextToken());
-
-        K = Integer.parseInt(br.readLine());
-
-        distance = new int[V + 1];
-        visited = new boolean[V + 1];
+        int V = Integer.parseInt(st.nextToken());
+        int E = Integer.parseInt(st.nextToken());
         list = new ArrayList[V + 1];
-
-        for (int i = 1; i <= V; i++) {
+        for (int i = 1; i < V + 1; i++) {
             list[i] = new ArrayList<>();
         }
-        for (int i = 0; i <= V; i++) {
-            distance[i] = Integer.MAX_VALUE;
-        } // 여기까지 초기화
+        distance = new int[V + 1];
+        Arrays.fill(distance, 1000000);
+        int start = Integer.parseInt(br.readLine());
+        distance[start] = 0;
 
         for (int i = 0; i < E; i++) {
             st = new StringTokenizer(br.readLine());
-            int u = Integer.parseInt(st.nextToken());
-            int v = Integer.parseInt(st.nextToken());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
             int w = Integer.parseInt(st.nextToken());
-            list[u].add(new Node(v, w));
-        } // 그래프 만들기
+            list[a].add(new Node(b, w));
+        }
+        dijkstra(start, V);
 
-        //---------------------------------------
-        queue.add(new Node(K, 0)); // 시작점 K
-        distance[K] = 0;
+
+    }
+
+    private static void dijkstra(int start, int V) {
+        PriorityQueue<Node> queue = new PriorityQueue<>();
+        boolean[] visited = new boolean[V + 1];
+        queue.add(new Node(start, 0));
+
 
         while (!queue.isEmpty()) {
-            Node current = queue.poll();
-            int now = current.getVertex(); // 현재 노드
+            Node now = queue.poll();
+            int vertex = now.vertex;
 
-            if (visited[now]) continue; // 방문한 적이 있는 노드면 패스
-            visited[now] = true;
+            if (visited[vertex]) continue;
+            visited[vertex] = true;
 
-            for (int i = 0; i < list[now].size(); i++) {
-                Node tmp = list[now].get(i);
-                int next = tmp.getVertex();
-                int value = tmp.getValue();
+            for (int i = 0; i < list[vertex].size(); i++) {
+                Node nextNode = list[vertex].get(i);
+                int nextVertex = nextNode.vertex;
+                int weight = nextNode.weight;
 
-                if (distance[next] > distance[now] + value) {
-                    distance[next] = value + distance[now];
-                    queue.add(new Node(next, distance[next]));
+                if (distance[nextVertex] > distance[vertex] + weight) {
+                    distance[nextVertex] = distance[vertex] + weight;
+                    queue.add(new Node(nextVertex, distance[nextVertex]));
                 }
             }
-
-
         }
+        sb = new StringBuilder();
         for (int i = 1; i <= V; i++) {
-            if (visited[i]) {
-//                    System.out.println(distance[i]);
-                sb.append(distance[i]).append("\n");
-            } else {
-//                    System.out.println("INF");
-                sb.append("INF").append("\n");
-            }
+            if(visited[i]) sb.append(distance[i]).append("\n");
+            else sb.append("INF").append("\n");
         }
         System.out.println(sb);
     }
-}
 
-class Node implements Comparable<Node> {
-    int vertex, value;
+    static class Node implements Comparable<Node> {
+        int vertex, weight;
 
-    public Node(int vertex, int value) {
-        this.vertex = vertex;
-        this.value = value;
-    }
+        public Node(int end, int weight) {
+            this.vertex = end;
+            this.weight = weight;
+        }
 
-    public int getVertex() {
-        return vertex;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    @Override
-    public int compareTo(Node e) {
-        if (this.value > e.value) return 1;
-        else return -1;
+        @Override
+        public int compareTo(Node o) {
+            if (this.weight > o.weight) return 1;
+            else return -1;
+        }
     }
 }
