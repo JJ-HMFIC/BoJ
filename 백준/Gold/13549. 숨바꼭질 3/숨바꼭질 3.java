@@ -1,78 +1,42 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    static int[] dx = {-1, 1};
-
-    // 좌표를 작은거 부터 설정하니까 통과한다
-    public static void main(String[] args) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-
-
-        if (N == M) {
-            System.out.println(0);
-            return;
-        } // 같으면 끝
-
-        BFS(N, M);
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        int K = sc.nextInt();
+        System.out.println(dijkstra(N, K));
     }
 
-    private static void BFS(int n, int m) {
-        Deque<Info> deque = new ArrayDeque<>();
+    private static int dijkstra(int n, int k) {
         boolean[] visited = new boolean[100001];
-        // 문제의 조건에 따라 배열 생성 (최대 10만)
+        PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> {
+            if (o1[1] == o2[1]) return Integer.compare(o1[0], o2[0]);
+            return Integer.compare(o1[1], o2[1]);
+        });
+        pq.add(new int[]{n, 0});
 
-        deque.offer(new Info(n, 0));
-        // 시작 자리 넣기
-        visited[n] = true;
-        while (!deque.isEmpty()) {
-            Info now = deque.poll();
-            int location = now.getLocation();
-            int time = now.getTime();
+        while (!pq.isEmpty()) {
+            int[] cur = pq.poll();
+            int pos = cur[0];
+            int time = cur[1];
 
-//            visited[location] = true;
+            if (pos == k) return time;
 
-            if (location == m) {
-                System.out.println(time);
-                return;
+            if (visited[pos]) continue;
+            visited[pos] = true;
+
+            if (pos * 2 <= 100000 && !visited[pos * 2]) {
+                pq.add(new int[]{pos * 2, time});
             }
-            int next = location * 2;
-            if (next < 100001 && !visited[next]) {
-                deque.offer(new Info(next, time));
-                visited[next] = true;
+            if (pos - 1 >= 0 && !visited[cur[0] - 1]) {
+                pq.add(new int[]{pos - 1, time + 1});
             }
-
-            for (int i = 0; i < 2; i++) {
-                int nx = location + dx[i];
-                if (nx >= 0 && nx <= 100000 && !visited[nx]) {
-                    visited[nx] = true;
-                    deque.offer(new Info(nx, time + 1));
-                }
+            if (pos + 1 <= 100000 && !visited[pos + 1]) {
+                pq.add(new int[]{pos + 1, time + 1});
             }
         }
-    }
-}
 
-class Info {
-    int location;
-    int time;
-
-    public Info(int location, int time) {
-        this.location = location;
-        this.time = time;
-    }
-
-    public int getLocation() {
-        return location;
-    }
-
-    public int getTime() {
-        return time;
+        return -1;
     }
 }
