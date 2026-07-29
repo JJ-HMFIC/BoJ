@@ -1,63 +1,67 @@
 import java.util.*;
-
 class Solution {
-    static ArrayList<Info>[] list;
+    static ArrayList<Edge>[] list;
     static int[] distance;
+    static boolean[] visited;
     public int solution(int N, int[][] road, int K) {
         list = new ArrayList[N+1];
-        distance = new int[N+1];
-        Arrays.fill(distance, Integer.MAX_VALUE);
-        for(int i = 1 ; i<=N ; i++){
+        for(int i = 1 ; i<=N ;i++){
             list[i] = new ArrayList<>();
         }
-        for(int i = 0 ; i< road.length;i++){
-            list[road[i][0]].add(new Info(road[i][1],road[i][2]));
-            list[road[i][1]].add(new Info(road[i][0],road[i][2]));
+        for(int[] info : road){
+            int a = info[0];
+            int b= info[1];
+            int w = info[2];
+            
+            list[a].add(new Edge(b,w));
+            list[b].add(new Edge(a,w));
         }
-        dijkstra(N,K);
+        distance = new int[N+1];
+        Arrays.fill(distance,Integer.MAX_VALUE);
+        
+        
+        visited= new boolean[N+1];
+        dijkstra(1);
         int answer = 0;
-        for(int i =1 ; i<=N;i++){
-            if(distance[i]<=K) answer++;
+        for(int w : distance){
+            if(w<=K) answer++;
         }
-    
+
 
         return answer;
     }
-    public void dijkstra(int N, int K){
-        PriorityQueue<Info> pq = new PriorityQueue<>();
-        boolean[] visited = new boolean[N+1];
+    public void dijkstra(int start){
+        PriorityQueue<Edge> pq = new PriorityQueue<>();
         distance[1] = 0;
-        pq.add(new Info(1,0));
+        pq.add(new Edge(start,0));
         
         while(!pq.isEmpty()){
-            Info cur = pq.poll();
-            int vertex = cur.vertex;
-            if(visited[vertex]) continue;
-            visited[vertex] = true;
-            
-            for(int i = 0 ;i< list[vertex].size();i++){
-                Info next = list[vertex].get(i);
-                int nVertex = next.vertex;
-                int nEdge = next.edge;
+            Edge top = pq.poll();
+            int v = top.v;
+            int w = top.w;
+            if(visited[v]) continue;
+            visited[v] = true;
+            for(Edge next : list[v]){
+                int nv = next.v;
+                int nw = next.w;
                 
-                if(distance[nVertex]> distance[vertex]+ nEdge){
-                    distance[nVertex] = distance[vertex]+ nEdge;
-                    pq.add(new Info(nVertex, distance[vertex]+nEdge));
+                if(distance[nv]>distance[v]+nw){
+                    distance[nv] = distance[v]+nw;
+                    pq.add(new Edge(nv,distance[v]+nw));
                 }
             }
-            
-        }
-        
-    }
-    public class Info implements Comparable<Info>{
-        int vertex;
-        int edge;
-        public Info(int vertex, int edge){
-            this.vertex = vertex;
-            this.edge = edge;
-        }
-        public int compareTo(Info o){
-            return Integer.compare(this.edge, o.edge);
         }
     }
+    public static class Edge implements Comparable <Edge>{
+        int v;
+        int w;
+        public Edge(int v, int w){
+            this.v = v;
+            this.w = w;
+        }
+        public int compareTo(Edge e){
+            return Integer.compare(this.w, e.w);
+        }
+    }
+
 }
