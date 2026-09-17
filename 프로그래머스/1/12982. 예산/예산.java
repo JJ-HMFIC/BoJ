@@ -1,15 +1,18 @@
 import java.util.*;
-import java.io.*;
 class Solution {
     public int solution(int[] d, int budget) {
+        
+        
         Arrays.sort(d);
-        int result = 0;
-        for(int i =0 ; i<d.length;i++) {
-            if(d[i]<=budget){
-                budget -= d[i];
-                result++;
+        int sum = 0;
+        int idx = 0;
+        
+        for(int i = 0 ;i<d.length;i++){
+            if(sum+d[i]<=budget){
+                sum+=d[i];
+                idx++;
             }
         }
-        return result;
+        return idx;
     }
 }
